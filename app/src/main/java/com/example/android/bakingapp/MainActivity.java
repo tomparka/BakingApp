@@ -1,11 +1,19 @@
 package com.example.android.bakingapp;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.android.bakingapp.data.NetworkUtils;
+import com.example.android.bakingapp.data.OpenRecipeJsonUtils;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,5 +37,41 @@ public class MainActivity extends AppCompatActivity {
 
         myAdapter = new RecipeListAdapter();
         mRecyclerView.setAdapter(myAdapter);
+
+        new RecipeDataTask().execute();
+    }
+
+    public class RecipeDataTask extends AsyncTask<Void, Void, Recipe[]> {
+
+        @Override
+        protected Recipe[] doInBackground(Void... voids) {
+
+            URL recipeRequestUrl = null;
+
+            try {
+                recipeRequestUrl = new URL(NetworkUtils.RECIPE_JSON_URL);
+                String jsonRecipeResponse = NetworkUtils
+                        .getResponseFromHttpUrl(recipeRequestUrl);
+
+                Recipe[] recipeDataArray = OpenRecipeJsonUtils
+                        .getRecipeObjArrayFromJson(MainActivity.this, jsonRecipeResponse);
+
+                return recipeDataArray;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Recipe[] recipeData) {
+            super.onPostExecute(recipeData);
+            if (recipeData != null) {
+                myAdapter.setRecipeArrayData(recipeData);
+            } else {
+                Log.d("onPostExecute", "recipeData array is null");
+            }
+        }
     }
 }

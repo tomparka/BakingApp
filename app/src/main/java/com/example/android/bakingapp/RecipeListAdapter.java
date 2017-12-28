@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Created by tp293 on 12/26/2017.
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
 
     private Context mContext;
+    private Recipe[] mRecipeArray;
 
     @Override
     public RecipeListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,20 +31,36 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     @Override
     public void onBindViewHolder(RecipeListViewHolder holder, int position) {
 
+        Recipe holderRecipe = mRecipeArray[position];
+        holder.mRecipeTextView.setText(holderRecipe.getName());
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        if (mRecipeArray == null) {
+            return 0;
+        } else {
+            return mRecipeArray.length;
+        }
     }
 
+    public void setRecipeArrayData(Recipe[] recipeArrayData) {
+        mRecipeArray = recipeArrayData;
+        notifyDataSetChanged();
+    }
+
+
+    /*
+    Inner class ViewHolder
+     */
     public class RecipeListViewHolder extends RecyclerView.ViewHolder {
+
+        TextView mRecipeTextView;
 
         public RecipeListViewHolder(View itemView) {
             super(itemView);
+            mRecipeTextView = itemView.findViewById(R.id.tv_recipe);
         }
-
-
     }
 
 }
