@@ -1,7 +1,9 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.android.bakingapp.R;
 
 public class RecipeStepDetailActivity extends AppCompatActivity {
 

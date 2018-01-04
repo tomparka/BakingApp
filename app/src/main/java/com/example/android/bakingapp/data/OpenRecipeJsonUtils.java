@@ -61,7 +61,7 @@ public final class OpenRecipeJsonUtils {
 
                 Recipe.RecipeStep currentStep = new Recipe.RecipeStep();
                 JSONObject currentStepJsonObj = stepsJsonArray.getJSONObject(k);
-                currentStep.setId(currentStepJsonObj.getInt("id") + 1);
+                currentStep.setId(currentStepJsonObj.getInt("id"));
                 currentStep.setShortDescription(currentStepJsonObj.getString("shortDescription"));
                 currentStep.setFullDescription(currentStepJsonObj.getString("description"));
                 currentStep.setVideoUrl(currentStepJsonObj.getString("videoURL"));

@@ -1,4 +1,4 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.activities;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.Recipe;
+import com.example.android.bakingapp.adapters.RecipeListAdapter;
 import com.example.android.bakingapp.data.NetworkUtils;
 import com.example.android.bakingapp.data.OpenRecipeJsonUtils;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import butterknife.BindView;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
 
         recipeLayoutManager = new GridLayoutManager(this, 1);
         mRecyclerView.setLayoutManager(recipeLayoutManager);
