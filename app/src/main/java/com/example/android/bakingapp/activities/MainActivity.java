@@ -1,5 +1,8 @@
 package com.example.android.bakingapp.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +21,7 @@ import java.net.URL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeListAdapter.RecipeListAdapterOnClickHandler {
 
     private RecipeListAdapter myAdapter;
     private GridLayoutManager recipeLayoutManager;
@@ -36,10 +39,18 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(recipeLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        myAdapter = new RecipeListAdapter();
+        myAdapter = new RecipeListAdapter(this);
         mRecyclerView.setAdapter(myAdapter);
 
         new RecipeDataTask().execute();
+    }
+
+    @Override
+    public void onClick(Recipe recipe) {
+        Context context = this;
+        Class destinationClass = RecipeStepsActivity.class;
+        Intent intent = new Intent(context, destinationClass);
+        intent.putExtra(Intent.EXTRA_TEXT, recipe);
     }
 
     public class RecipeDataTask extends AsyncTask<Void, Void, Recipe[]> {

@@ -1,16 +1,58 @@
 package com.example.android.bakingapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by tp293 on 12/27/2017.
  */
 
-public class Recipe {
+public class Recipe implements Parcelable{
     private int id;
     private String name;
     private Ingredient[] ingredients;
     private RecipeStep[] recipeSteps;
     private int servings;
     private String imageUrl;
+
+    public Recipe() {
+    }
+
+    protected Recipe(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        ingredients = in.createTypedArray(Ingredient.CREATOR);
+        recipeSteps = in.createTypedArray(RecipeStep.CREATOR);
+        servings = in.readInt();
+        imageUrl = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeTypedArray(ingredients, flags);
+        dest.writeTypedArray(recipeSteps, flags);
+        dest.writeInt(servings);
+        dest.writeString(imageUrl);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -60,10 +102,42 @@ public class Recipe {
         this.imageUrl = imageUrl;
     }
 
-    public static class Ingredient {
+    public static class Ingredient implements Parcelable{
         private int quantity;
         private String measure;
         private String name;
+
+        public Ingredient() {}
+
+        protected Ingredient(Parcel in) {
+            quantity = in.readInt();
+            measure = in.readString();
+            name = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(quantity);
+            dest.writeString(measure);
+            dest.writeString(name);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
+            @Override
+            public Ingredient createFromParcel(Parcel in) {
+                return new Ingredient(in);
+            }
+
+            @Override
+            public Ingredient[] newArray(int size) {
+                return new Ingredient[size];
+            }
+        };
 
         public int getQuantity() {
             return quantity;
@@ -90,12 +164,48 @@ public class Recipe {
         }
     }
 
-    public static class RecipeStep {
+    public static class RecipeStep implements Parcelable{
         private int id;
         private String shortDescription;
         private String fullDescription;
         private String videoUrl;
         private String thumbnailUrl;
+
+        public RecipeStep() {}
+
+        protected RecipeStep(Parcel in) {
+            id = in.readInt();
+            shortDescription = in.readString();
+            fullDescription = in.readString();
+            videoUrl = in.readString();
+            thumbnailUrl = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeString(shortDescription);
+            dest.writeString(fullDescription);
+            dest.writeString(videoUrl);
+            dest.writeString(thumbnailUrl);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<RecipeStep> CREATOR = new Creator<RecipeStep>() {
+            @Override
+            public RecipeStep createFromParcel(Parcel in) {
+                return new RecipeStep(in);
+            }
+
+            @Override
+            public RecipeStep[] newArray(int size) {
+                return new RecipeStep[size];
+            }
+        };
 
         public int getId() {
             return id;

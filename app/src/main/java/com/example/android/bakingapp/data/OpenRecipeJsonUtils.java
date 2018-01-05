@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.data;
 
 import android.content.Context;
+import android.os.Parcel;
 
 import com.example.android.bakingapp.Recipe;
 
