@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
 
     @Override
     public void onClick(Recipe recipe) {
+        Log.d(this.getClass().getName(), "onClick called");
         Context context = this;
         Class destinationClass = RecipeStepsActivity.class;
         Intent intent = new Intent(context, destinationClass);
         intent.putExtra(Intent.EXTRA_TEXT, recipe);
+        startActivity(intent);
     }
 
     public class RecipeDataTask extends AsyncTask<Void, Void, Recipe[]> {
