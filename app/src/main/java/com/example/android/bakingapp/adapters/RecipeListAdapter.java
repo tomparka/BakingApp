@@ -53,6 +53,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         if (mRecipeArray == null) {
             return 0;
         } else {
+            Log.d("TAG", "recipe array length is " + Integer.toString(mRecipeArray.length));
             return mRecipeArray.length;
         }
     }

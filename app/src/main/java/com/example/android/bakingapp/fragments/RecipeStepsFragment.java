@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.Recipe;
+import com.example.android.bakingapp.activities.RecipeStepsActivity;
 import com.example.android.bakingapp.adapters.RecipeStepsAdapter;
 
 /**
@@ -24,8 +26,9 @@ import com.example.android.bakingapp.adapters.RecipeStepsAdapter;
  */
 public class RecipeStepsFragment extends Fragment {
 
+    private TextView debugTextView;
+
     // Storage variables
-    private Recipe mRecipe;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecipeStepsAdapter mAdapter;
@@ -49,6 +52,20 @@ public class RecipeStepsFragment extends Fragment {
         // Set the adapter on the RecyclerView
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        // Get and set adapter data from activity
+        RecipeStepsActivity activity = (RecipeStepsActivity) getActivity();
+        mAdapter.setRecipeStepsData(activity.getRecipe());
+
+        /******* DEBUG *******/
+        debugTextView = rootView.findViewById(R.id.tv_debug);
+        try {
+            debugTextView.setText(Integer.toString(activity.getRecipe().getRecipeSteps().length));
+        } catch (Exception e){
+            debugTextView.setText(e.getMessage());
+        }
+
+        /***********************/
 
         // Return the root view
         return rootView;

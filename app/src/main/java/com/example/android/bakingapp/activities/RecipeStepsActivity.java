@@ -18,18 +18,22 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //get selected recipe from the activity-starting intent
+        Recipe recipeFromIntent = getIntent().getExtras().getParcelable(Intent.EXTRA_TEXT);
+        if (recipeFromIntent != null) {mRecipe = recipeFromIntent;}
+        else {Log.d(TAG, "mRecipe is null");}
+
         setContentView(R.layout.activity_recipe_steps);
 
-        Recipe recipeFromIntent = getIntent().getExtras().getParcelable(Intent.EXTRA_TEXT);
-        if (recipeFromIntent != null) {
-            mRecipe = recipeFromIntent;
-        } else {
-            Log.d(TAG, "mRecipe is null");
-        }
     }
 
     @Override
     public void onFragmentInteraction(int position) {
 
+    }
+
+    public Recipe getRecipe() {
+        return mRecipe;
     }
 }

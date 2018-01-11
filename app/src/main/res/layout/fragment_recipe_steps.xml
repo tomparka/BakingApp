@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.bakingapp.fragments.RecipeStepsFragment">
 
+    <TextView
+        android:id="@+id/tv_debug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recipe_steps"
         android:layout_width="match_parent"

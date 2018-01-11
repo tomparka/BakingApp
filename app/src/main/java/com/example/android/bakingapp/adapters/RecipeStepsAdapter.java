@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.Recipe;
 
 /**
  * Created by tp293 on 1/4/2018.
@@ -16,7 +17,7 @@ import com.example.android.bakingapp.R;
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder> {
 
     private Context mContext;
-    private String[] mRecipeStepsArray;
+    private Recipe mRecipeData;
 
     @Override
     public RecipeStepsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -24,7 +25,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             mContext = parent.getContext();
         }
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        int viewHolderLayout = R.layout.recipe_item;
+        int viewHolderLayout = R.layout.recipe_step_item;
 
         View view = layoutInflater.inflate(viewHolderLayout, parent, false);
         return new RecipeStepsViewHolder(view);
@@ -32,24 +33,24 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
     @Override
     public void onBindViewHolder(RecipeStepsViewHolder holder, int position) {
-        /*
-        Recipe holderRecipe = mRecipeArray[position];
-        holder.mRecipeTextView.setText(holderRecipe.getName());
-        */
+
+        Recipe.RecipeStep currentStep = mRecipeData.getRecipeSteps()[position];
+        String currentStepTextToDisplay = "Step " + Integer.toString(position + 1) + ": " + currentStep.getShortDescription();
+        holder.mRecipeStepTextView.setText(currentStepTextToDisplay);
     }
 
     @Override
     public int getItemCount() {
-        if (mRecipeStepsArray == null) {
+        if (mRecipeData == null) {
             return 0;
         } else {
-            return mRecipeStepsArray.length;
+            return mRecipeData.getRecipeSteps().length;
         }
     }
 
     /*** MUST UPDATE ***/
-    public void setRecipeArrayData(String[] recipeArrayData) {
-        mRecipeStepsArray = recipeArrayData;
+    public void setRecipeStepsData(Recipe recipeData) {
+        mRecipeData = recipeData;
         notifyDataSetChanged();
     }
 

@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         protected void onPostExecute(Recipe[] recipeData) {
             super.onPostExecute(recipeData);
             if (recipeData != null) {
+                Log.d("onPostExecute", "length is " + Integer.toString(recipeData.length));
                 myAdapter.setRecipeArrayData(recipeData);
             } else {
                 Log.d("onPostExecute", "recipeData array is null");
