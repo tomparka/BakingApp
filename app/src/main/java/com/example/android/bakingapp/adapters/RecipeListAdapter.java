@@ -83,7 +83,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             Log.d("RecipeListAdapter", "Adapter position" + Integer.toString(adapterPosition) + "clicked");
             Recipe recipe = mRecipeArray[adapterPosition];
             mClickHandler.onClick(recipe);
-
         }
     }
 

@@ -25,12 +25,12 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         else {Log.d(TAG, "mRecipe is null");}
 
         setContentView(R.layout.activity_recipe_steps);
-
     }
 
     @Override
     public void onFragmentInteraction(int position) {
-
+        Intent intent = new Intent(this, RecipeStepDetailActivity.class);
+        intent.putExtra("SELECTED_STEP", position);
     }
 
     public Recipe getRecipe() {

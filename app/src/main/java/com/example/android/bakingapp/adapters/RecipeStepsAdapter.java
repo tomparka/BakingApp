@@ -2,6 +2,7 @@ package com.example.android.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,15 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
     private Context mContext;
     private Recipe mRecipeData;
+    private RecipeStepsAdapterOnClickHandler mClickHandler;
+
+    public interface RecipeStepsAdapterOnClickHandler {
+        void onClick (int position);
+    }
+
+    public RecipeStepsAdapter(RecipeStepsAdapterOnClickHandler clickHandler){
+        mClickHandler = clickHandler;
+    }
 
     @Override
     public RecipeStepsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,13 +64,20 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         notifyDataSetChanged();
     }
 
-    public class RecipeStepsViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeStepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mRecipeStepTextView;
 
         public RecipeStepsViewHolder(View itemView) {
             super(itemView);
             mRecipeStepTextView = (TextView) itemView.findViewById(R.id.tv_step);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onClick(adapterPosition);
         }
     }
 }

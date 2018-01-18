@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.Recipe;
+import com.example.android.bakingapp.activities.RecipeStepDetailActivity;
 import com.example.android.bakingapp.activities.RecipeStepsActivity;
 import com.example.android.bakingapp.adapters.RecipeStepsAdapter;
 
@@ -24,11 +26,12 @@ import com.example.android.bakingapp.adapters.RecipeStepsAdapter;
  * Use the {link RecipeStepsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeStepsFragment extends Fragment {
+public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.RecipeStepsAdapterOnClickHandler{
 
     private TextView debugTextView;
 
     // Storage variables
+    private Recipe mRecipe;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private RecipeStepsAdapter mAdapter;
@@ -47,7 +50,7 @@ public class RecipeStepsFragment extends Fragment {
         // Get a reference to the GridView in the fragment_master_list xml layout file
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_recipe_steps);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RecipeStepsAdapter();
+        mAdapter = new RecipeStepsAdapter(this);
 
         // Set the adapter on the RecyclerView
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -55,17 +58,8 @@ public class RecipeStepsFragment extends Fragment {
 
         // Get and set adapter data from activity
         RecipeStepsActivity activity = (RecipeStepsActivity) getActivity();
-        mAdapter.setRecipeStepsData(activity.getRecipe());
-
-        /******* DEBUG *******/
-        debugTextView = rootView.findViewById(R.id.tv_debug);
-        try {
-            debugTextView.setText(Integer.toString(activity.getRecipe().getRecipeSteps().length));
-        } catch (Exception e){
-            debugTextView.setText(e.getMessage());
-        }
-
-        /***********************/
+        mRecipe = activity.getRecipe();
+        mAdapter.setRecipeStepsData(mRecipe);
 
         // Return the root view
         return rootView;
@@ -76,6 +70,14 @@ public class RecipeStepsFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(position);
         }
+    }
+
+    @Override
+    public void onClick(int position) {
+        Intent intent = new Intent(getActivity(), RecipeStepDetailActivity.class);
+        intent.putExtra("RECIPE", mRecipe);
+        intent.putExtra("STEP_NUMBER", position);
+        startActivity(intent);
     }
 
     /*

@@ -5,13 +5,35 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/exoplayer_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="7"/>
 
-    <FrameLayout
+    <ScrollView
+        android:id="@+id/recipe_step_instructions_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="7"/>
 
     <!-- Possibly add navigation to next or previous recipe step details -->
-
+    <LinearLayout
+        android:id="@+id/step_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Previous Step"/>
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Next Step"/>
+    </LinearLayout>
 </LinearLayout>
